@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * @Description:
@@ -12,6 +13,7 @@ public class Tank {
     TankFrame tf = null;
     private final static int SPEED = 5;
     boolean isMoving = false;
+    BufferedImage img ;
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
@@ -29,7 +31,23 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
+
+        switch (dir) {
+            case RIGHT:
+                img = ResourceMgr.tankR;
+                break;
+            case DOWN:
+                img = ResourceMgr.tankD;
+                break;
+            case UP:
+                img = ResourceMgr.tankU;
+                break;
+            case LEFT:
+                img = ResourceMgr.tankL;
+            default:
+        }
         g.fillRect(x, y, 50, 50);
+        g.drawImage(img, x, y, null);
         move();
     }
 
@@ -62,7 +80,7 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bullets.add(new Bullet(x, y, dir,this.tf));
+        tf.bullets.add(new Bullet(x + img.getWidth() / 2 , y + img.getHeight() / 2 , dir, this.tf));
 
     }
 }

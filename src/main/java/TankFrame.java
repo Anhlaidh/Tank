@@ -15,6 +15,7 @@ public class TankFrame extends Frame {
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
     Tank tank = new Tank(50, 50, Dir.DOWN,this);
     List<Bullet> bullets = new ArrayList<Bullet>();
+    List<Tank> enemies = new ArrayList<Tank>();
 
     public TankFrame() throws HeadlessException {
         setResizable(false);
@@ -52,14 +53,15 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.YELLOW);
         tank.paint(g);
-        g.setColor(c);
-        c = g.getColor();
+        Color c = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("bullet nums:" + bullets.size(), 20, 60);
         g.setColor(c);
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).paint(g);
+
+        }
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }

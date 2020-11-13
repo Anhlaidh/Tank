@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * @Description:
@@ -9,26 +10,41 @@ public class Bullet {
     private static final int SPEED = 10;
     private int x;
     private int y;
-    private static int WIDTH = 5 , HEIGHT = 5;
+    public static int WIDTH = 5 , HEIGHT = 5;
     private Dir dir;
     private boolean live = true;
     TankFrame tf = null;
+    public  BufferedImage img;
 
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
-        this.x = x;
-        this.y = y;
         this.dir = dir;
+        switch (dir) {
+            case RIGHT:
+                img = ResourceMgr.bulletR;
+                break;
+            case DOWN:
+                img = ResourceMgr.bulletD;
+                break;
+            case UP:
+                img = ResourceMgr.bulletU;
+                break;
+            case LEFT:
+                img = ResourceMgr.bulletL;
+            default:
+        }
+        this.x = x- img.getWidth() / 2;
+        this.y = y-img.getHeight() / 2;
+
         this.tf = tf;
     }
 
     public void paint(Graphics g) {
+
         if (!live) {
             tf.bullets.remove(this);
         }
         Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+        g.drawImage(img, x, y, null);
         move();
     }
 
